@@ -3,7 +3,7 @@
 #include <EEPROM.h>
 #include <CyberLib.h>
 
-//#define _SS_MAX_RX_BUFF 128                             // регулируем размер RX буфера SoftwareSerial
+#define _SS_MAX_RX_BUFF 128                             // регулируем размер RX буфера SoftwareSerial
                         
 #define Zona_1 8          // Вход                 
 #define Zona_2 9          // Вход                     
