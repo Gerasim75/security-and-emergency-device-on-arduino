@@ -941,7 +941,7 @@ void getNewSMS()
       else 
       {
         counter_Errors ++ ;
-        last_Update  =  millis();                                 // Обнуляем таймер ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        last_Update  =  millis();                                 // Обнуляем таймер 
         if (hasmsg || counter_Errors > 10) 
         {
           sendATCommand("AT+CMGDA=\"DEL ALL\"", true);            // Удаляем все сообщения
