@@ -87,15 +87,15 @@ byte counter_admins = 5;                                        // Количе�
 Sensor zona[6];
 
 /////////////////////////////// Прототипы функций ////////////////////////////////////////
-void Call(String & num);
+void call(String & num);
 String sendATCommand(String cmd, bool waiting);
 String waitResponse();
 void sensors();
-void alarm_messages();
+void alarmMessages();
 void parseSMS(String & msg);
 void setLedState(String & result, String & msgphone);
 void sendSMS(String message);
-float Balans(String & kod);
+float balans(String & kod);
 float getFloatFromString(String & str);
 void balanceSim();
 void initialZones();
@@ -104,8 +104,8 @@ void voltage();
 void testModem();
 void initialModem();
 void getNewSMS();
-void klava();
-void ActivateRele(byte Alarm1, byte Alarm2);
+void keyboard();
+void activateRelay(byte Alarm1, byte Alarm2);
 void initialEeprom();
 void dingDong();
 void incomingCall();
@@ -183,7 +183,7 @@ void setup()
 void loop() 
 { 
   flagloop = true;
-  klava();                                            // Ожидаем данные с клавиатуры
+  keyboard();                                            // Ожидаем данные с клавиатуры
   balanceSim();                                       // Проверяем баланс на сим карте
   dingDong();                                         // Свето-звуковая индикация входящего звонка 
   getNewSMS();                                        // Получаем входящие смс
@@ -240,7 +240,7 @@ void loop()
 //    Serial.println(F("rejim"));                     // Если нужно отправляем сообщение в монитор порта               
     D13_High;                                         // Включаем светодиод
     sensors();                                        // Смотрим на датчики
-    alarm_messages();                                 // Отправляем необходимые уведомления
+    alarmMessages();                                 // Отправляем необходимые уведомления
   }
     voltage();                                        // Контролируем питание системы
 }
@@ -249,7 +249,7 @@ void loop()
 
 /////////////////////////////////////////// Функция оповещения звонком ////////////////////////////////////////////
 
-void Call(String & num)
+void call(String & num)
 {
   String comand = F("ATD");
    sendATCommand("AT+COLP=0", true);                // Режим ожидания ответа
@@ -312,7 +312,7 @@ void sensors()
 
 /////////////////////////////////////////////// Функция уведомлений //////////////////////////////////////////////////////////////////////
                                                                  
-void alarm_messages()
+void alarmMessages()
 {
   if(flag_alarm)
   {
@@ -324,12 +324,12 @@ void alarm_messages()
             {
                if(millis() - timer_zaderjka > time_zaderjka_off)                            // Если сработал таймер
                  {     
-                    ActivateRele(zona[srabotki[i]].PinAlarm1, zona[srabotki[i]].PinAlarm2); // Активируем реле тревоги
+                    activateRelay(zona[srabotki[i]].PinAlarm1, zona[srabotki[i]].PinAlarm2); // Активируем реле тревоги
                     sendSMS(zona[srabotki[i]].messageAlarm);                                // Отправляем смс уведомление
                     if(!flagTel)                                                            // Если еще не было звонка администратору
                     {
                       flagTel = true;                                                       // Поднимаем флаг звонка  
-                      Call(phones[0]);                                                      // Звоним администратору
+                      call(phones[0]);                                                      // Звоним администратору
                     }
                     zona[srabotki[i]].sendAlarm = true;                                     // Поднимаем флаг отправленного уведомления
                     flag_zaderjka_zona1 = true;                                             // Поднимаем флаг задержки сработки
@@ -339,12 +339,12 @@ void alarm_messages()
           else
             {
                if(srabotki[i] == 1 && flag_zona1 && !flag_zaderjka_zona1) break;
-              ActivateRele(zona[srabotki[i]].PinAlarm1, zona[srabotki[i]].PinAlarm2);        // Активируем реле тревоги
+              activateRelay(zona[srabotki[i]].PinAlarm1, zona[srabotki[i]].PinAlarm2);        // Активируем реле тревоги
               sendSMS(zona[srabotki[i]].messageAlarm);                                       // Отправляем смс уведомление
               if(!flagTel)                                                                   // Если еще не было звонка администратору
               {
                 flagTel = true;                                                              // Поднимаем флаг звонка  
-                Call(phones[0]);                                                             // Звоним администратору
+                call(phones[0]);                                                             // Звоним администратору
               }
               zona[srabotki[i]].sendAlarm = true;                                            // Поднимаем флаг отправленного уведомления
               break;                                                                         // Выходим из цикла
@@ -675,7 +675,7 @@ void sendSMS(String message)
 
 ///////////////////////////////////////// Функция получения БАЛАНСА СИМ карты в меню /////////////////////////////
 
-float Balans(String & kod) 
+float balans(String & kod) 
 {
 bool flag = true;
 _response  =  sendATCommand("AT+CUSD=1,\"" + kod + "\"", true);   // Отправляем USSD-запрос баланса
@@ -742,7 +742,7 @@ void balanceSim()
 if((millis() - timerBalance) > time_balance)
   {
     String message  =  F("Balans na sim  =  ");
-    float balance = Balans(kod_operatora);                 // Извлекаем баланс
+    float balance = balans(kod_operatora);                 // Извлекаем баланс
     delay(3000);
     if(balance <= balance_send)                            // Порог баланса для оповещения
     {
@@ -959,7 +959,7 @@ void getNewSMS()
 
 /////////////////////////////////////// Функция работы с клавиатурой /////////////////////////////////////////////////
 
-void klava()
+void keyboard()
 {
   if(digitalRead(KlavaPin) == LOW)                                  // Если пропал сигнал с клавиатуры
   {
@@ -999,7 +999,7 @@ void klava()
 
 ///////////////////////////////////////// Функция активации реле ////////////////////////////////////////////////////////
 
-void ActivateRele(byte Alarm1, byte Alarm2)
+void activateRelay(byte Alarm1, byte Alarm2)
 {
 
       switch (Alarm1)                          // Если к датчику подключена тревога 1
