@@ -2,7 +2,7 @@
 
 //// Голосовые уведомления звонком
 
-///////////////////////////Охранно-аварийная gsm-сигнализация с sms-управляемыми реле ////////////////////////////////
+/////////////////////////// Охранно-аварийная gsm-сигнализация с sms-управляемыми реле ////////////////////////////////
 
 #include  <SoftwareSerial.h>                                
 #include  <EEPROM.h> 
@@ -91,7 +91,7 @@ Sensor zone[6];
 
 /////////////////////////////// Прототипы функций ////////////////////////////////////////
 
-void Call(String & num);
+void Call(String & num, byte adress);
 String SendATCommand(String cmd, bool waiting);
 String WaitResponse();
 void GetSensors();
@@ -375,7 +375,7 @@ void AlarmMessages()
             if(!flag_tel)                                                        // Если еще не было звонка администратору
             {
               flag_tel = true;                                                   // Поднимаем флаг звонка  
-              Call(phones[0]);                                                   // Звоним администратору
+              Call(phones[0], zone[i].adress_);                                  // Звоним администратору
             }
             zone[triggered[i]].send_alarm_ = true;                                // Поднимаем флаг отправленного уведомления
             flag_delay_zone1 = true;                                              // Поднимаем флаг задержки сработки
@@ -390,7 +390,7 @@ void AlarmMessages()
           if(!flag_tel)                                                               // Если еще не было звонка администратору
           {
             flag_tel = true;                                                          // Поднимаем флаг звонка  
-            Call(phones[0]);                                                          // Звоним администратору
+            Call(phones[0], zone[i].adress_);                                         // Звоним администратору
           }
           zone[triggered[i]].send_alarm_ = true;                                      // Поднимаем флаг отправленного уведомления
           break;                                                                      // Выходим из цикла
