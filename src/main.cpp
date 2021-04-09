@@ -1,8 +1,8 @@
-/// DEVELOP
+/// My_feacture
 
 //// Голосовые уведомления звонком
 
-///////////////////////////Охранно-аварийная gsm-сигнализация с sms-управляемыми реле ////////////////////////////////
+/////////////////////////// Охранно-аварийная gsm-сигнализация с sms-управляемыми реле ////////////////////////////////
 
 #include  <SoftwareSerial.h>                                
 #include  <EEPROM.h> 
@@ -10,16 +10,17 @@
 
 //#define _SS_MAX_RX_BUFF 128                             // регулируем размер RX буфера SoftwareSerial
                         
-#define ZONE_1 8          // Вход                 
-#define ZONE_2 9          // Вход                     
-#define ZONE_3 10         // Вход                          
-#define ZONE_4 11         // Вход пожар
-#define ZONE_5 12         // Вход газ
-#define ZONE_6 19         // Вход вода
-#define KEYBOARD_PIN 18   // Вход клавиатура 
-#define VOLT_PIN 17       // Вход сеть
-#define BUZZER_PIN 6      // На плате
-#define BUTTON_PIN 16     // На плате
+#define ZONE_1 8           // Вход                 
+#define ZONE_2 9           // Вход                     
+#define ZONE_3 10          // Вход                          
+#define ZONE_4 11          // Вход пожар
+#define ZONE_5 12          // Вход газ
+#define ZONE_6 19          // Вход вода
+#define KEYBOARD_PIN 18    // Вход клавиатура 
+#define VOLT_PIN 17        // Вход сеть
+#define BUZZER_PIN 6       // На плате
+#define BUTTON_PIN 16      // На плате
+#define DELAY_PLAY_TRACK 3 // Пауза для проигрыша трека
                                        
 class Sensor {                          // Объявляем класс Sensor
   public:
@@ -90,7 +91,7 @@ Sensor zone[6];
 
 /////////////////////////////// Прототипы функций ////////////////////////////////////////
 
-void Call(String & num);
+void Call(String & num, byte adress);
 String SendATCommand(String cmd, bool waiting);
 String WaitResponse();
 void GetSensors();
@@ -252,7 +253,7 @@ void loop()
 
 /////////////////////////////////////////// Функция оповещения звонком ////////////////////////////////////////////
 
-void Call(String & num)
+void Call(String & num, byte adress)
 {
   String comand = F("ATD");
   SendATCommand("AT+COLP=0", true);                // Режим ожидания ответа
@@ -262,8 +263,46 @@ void Call(String & num)
   SendATCommand(comand, true);                     // Отправляем команду вызова
   //delay(3000);                                     // Пауза до сброса вызова
   //SendATCommand("ATH0", true);                     // Сбрасываем вызов через 30 сек
+
+ switch(adress)
+ {
+    case 0:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\1.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+      break;
+    case 1:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\2.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+      break;
+    case 2:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\3.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+         break;
+    case 3:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\4.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+      break;
+    case 4:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\5.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+      break;
+    case 5:
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\6.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                                 // Делаем паузу для воспроизведения трека 
+      SendATCommand("ATH0", true);                             // Сбрасываем вызов
+      break;
+   }
+
+ //  sendATCommand(AT+CPAMR="001.amr",0)           // Воспроизвести файл в сторону удаленного абонента
+//delay(3000);                                     // Пауза до сброса вызова
+//   sendATCommand("ATH0", true);                  // Сбрасываем вызов
   
-  }
+}
 
 //////////////////////////////////////// Функция отправки команды сим модулю /////////////////////////////////////
 
@@ -336,7 +375,7 @@ void AlarmMessages()
             if(!flag_tel)                                                        // Если еще не было звонка администратору
             {
               flag_tel = true;                                                   // Поднимаем флаг звонка  
-              Call(phones[0]);                                                   // Звоним администратору
+              Call(phones[0], zone[i].adress_);                                  // Звоним администратору
             }
             zone[triggered[i]].send_alarm_ = true;                                // Поднимаем флаг отправленного уведомления
             flag_delay_zone1 = true;                                              // Поднимаем флаг задержки сработки
@@ -351,7 +390,7 @@ void AlarmMessages()
           if(!flag_tel)                                                               // Если еще не было звонка администратору
           {
             flag_tel = true;                                                          // Поднимаем флаг звонка  
-            Call(phones[0]);                                                          // Звоним администратору
+            Call(phones[0], zone[i].adress_);                                         // Звоним администратору
           }
           zone[triggered[i]].send_alarm_ = true;                                      // Поднимаем флаг отправленного уведомления
           break;                                                                      // Выходим из цикла
@@ -1134,14 +1173,17 @@ void GetIncomingCall()
     if(flag_admin)                                 // Если звонит админ
     {
       mode = !mode;                                // Сменить режим охраны
-      SendATCommand("ATH", true);                  // сбросить звонок
+      SendATCommand("ATA", true);                  // Ответить на звонок
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\nerejim.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                     // Делаем паузу для воспроизведения трека
+      SendATCommand("ATH", true);                  // Сбрасываем звонок
       SendSMS(F("mode OFF"));                      // Отправляем смс с результатом администратору
-      return;                                      // и выйти 
+      return;                                      // и выходим
     }
     else                                           // Звонит не админ
     {
-      SendATCommand("ATH", true);                  // сбросить звонок
-      return;                                      // и выйти
+      SendATCommand("ATH", true);                  // Сбрасываем звонок
+      return;                                      // и выходим
     }
   }
   else
@@ -1149,27 +1191,29 @@ void GetIncomingCall()
     if(flag_admin)                                 // Если звонит админ
     {
       mode = !mode;                                // Сменить режим охраны
-      SendATCommand("ATH", true);                  // сбросить звонок
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\rejim.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                     // Делаем паузу для воспроизведения трека
+      SendATCommand("ATH", true);                  // Сбрасываем звонок
       SendSMS(F("mode ON"));                       // Отправляем смс с результатом администратору
       return;      
     } 
-        timer_ring = millis();                     // Включаем таймер для визуализации звонка  
-                                                                          // Если длина номера больше 6 цифр, 
-      if (inner_phone.length()  >=  7 && digitalRead(BUTTON_PIN) == HIGH)  // и нажата кнопка на плате
-      {
-        phones[0] = inner_phone;
+    timer_ring = millis();                         // Включаем таймер для визуализации звонка  
+                                                                         // Если длина номера больше 6 цифр, 
+    if (inner_phone.length()  >=  7 && digitalRead(BUTTON_PIN) == HIGH)  // и нажата кнопка на плате
+    {
+      phones[0] = inner_phone;
 
-        for(int i = 0; i < 13; i ++ )
-        {
-          EEPROM.write(i, (byte)phones[0][i]);     // Записываем номер в память EEPROM
-        }      
-        SendATCommand("ATH", true);                // Сбрасываем звонок
-          delay(3000);          
-          tone(BUZZER_PIN, 1915);                   // Сигнализируем динамиком о принятии номера администратора
-          delay(1000);
-          noTone(6); 
-        
-        SendSMS(F("Administrator number accepted!"));  
-      }
+      for(int i = 0; i < 13; i ++ )
+      {
+        EEPROM.write(i, (byte)phones[0][i]);     // Записываем номер в память EEPROM
+      }  
+      SIM800.print(F("AT+CREC=4,\"C:\\User\\admin.amr\",0,80"));   // Проигрываем звуковой файл
+      delay(DELAY_PLAY_TRACK);                   // Делаем паузу для воспроизведения трека  
+      SendATCommand("ATH", true);                // Сбрасываем звонок         
+      tone(BUZZER_PIN, 1915);                    // Сигнализируем динамиком о принятии номера администратора
+      delay(1000);
+      noTone(6); 
+      SendSMS(F("Administrator number accepted!"));  
+    }
   }
 }
