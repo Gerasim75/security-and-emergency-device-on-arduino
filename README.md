@@ -13,7 +13,7 @@
 <h2 align=center>Installing the program on the Arduino Nano controller from the ArduinoIDE environment</h2>
 <ul>
   <li>Create a new project in the ArduinoIDE environment
-  <li>Add to the project via the library manager: <a href="https://github.com/PaulStoffregen/SoftwareSerial/archive/refs/heads/master.zip">SoftwareSerial.h</a>, <a href="https://github.com/PaulStoffregen/EEPROM/archive/refs/heads/master.zip"></a>EEPROM.h</a>, <a href="https://github.com/pythonista/CyberLib/archive/refs/heads/master.zip">CyberLib.h</a>
+  <li>Add to the project via the library manager: <a href="https://github.com/PaulStoffregen/SoftwareSerial/archive/refs/heads/master.zip">SoftwareSerial.h</a>, <a href="https://github.com/PaulStoffregen/EEPROM/archive/refs/heads/master.zip">EEPROM.h</a>, <a href="https://github.com/pythonista/CyberLib/archive/refs/heads/master.zip">CyberLib.h</a>
   <li>Select the Arduino Nano card in the project settings
   <li>Copy the program code from src/main.cpp to the project file
   <li>Upload the program to the controller using the standard ArduinoIDE tool
