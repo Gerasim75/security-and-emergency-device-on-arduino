@@ -38,7 +38,7 @@
 <p>&nbsp;
   After installing and configuring this equipment, the administrator's phone number and the backup phone number are recorded, after which the device operation parameters are set from the administrator's phone number with the appropriate commands.
   </p>
-  <h3 align="center">Settings</h3>
+  <h3 align=center>Settings</h3>
 <p>&nbsp;
   <b>Setting the Administrator number::</b> call to the number of the SIM card installed in the device, the device will respond with a sound and LED alarm, press the button on the device board until the call ends. The device will respond with a long beep and notify you by SMS about the acceptance of the admin number.
 </p>
