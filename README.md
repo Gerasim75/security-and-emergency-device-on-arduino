@@ -82,6 +82,6 @@
   <li>повторяющиеся серии коротких звуковых и световых сигналов - входящий звонок
 </ul>
 <p>&nbsp;
-Видеообзор функционала устройства на сайте проекта <a href="https://www.robot.zp.ua">www.robot.zp.ua</a>
+Видеообзор функционала устройства на сайте проекта <a href="https://www.robot.zp.ua/index.php/articles/7-avarijno-okhrannoe-gsm-ustrojstvo-s-udalenno-upravlyaemymi-rele">www.robot.zp.ua</a>
 </p>
 
