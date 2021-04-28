@@ -82,5 +82,5 @@
   <li>repeated series of short beeps and lights - incoming call
 </ul>
 <p>&nbsp;
-Video review of the device functionality on the project website <a href="https://www.robot.zp.ua">www.robot.zp.ua</a>
+Video review of the device functionality on the project website <a href="https://www.robot.zp.ua/index.php/articles/7-avarijno-okhrannoe-gsm-ustrojstvo-s-udalenno-upravlyaemymi-rele">www.robot.zp.ua</a>
 </p>
