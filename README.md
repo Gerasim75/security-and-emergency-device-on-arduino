@@ -15,7 +15,7 @@
   <li>Создать новый проект в среде ArduinoIDE
   <li>Добавить в проект через менеджер библиотек: <a href="https://github.com/PaulStoffregen/SoftwareSerial/archive/refs/heads/master.zip">SoftwareSerial.h</a>, <a href="https://github.com/PaulStoffregen/EEPROM/archive/refs/heads/master.zip">EEPROM.h</a>, <a href="https://github.com/pythonista/CyberLib/archive/refs/heads/master.zip">CyberLib.h</a>
   <li>Выбрать в настройках проекта плату Arduino Nano
-  <li>Скопировать код программы из src/main.cpp в файл проекта
+  <li>Скопировать файлы программы из каталога src в файл проекта ардуино
   <li>Загрузить программу в контроллер штатным средством ArduinoIDE
 </ul>
 <h2 align=center>Описание работы устройства</h2>
