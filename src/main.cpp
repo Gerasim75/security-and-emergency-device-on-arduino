@@ -3,6 +3,8 @@
 #include  <SoftwareSerial.h>                                
 #include  <EEPROM.h> 
 #include  <CyberLib.h> 
+#include  "sensor.h"
+#include  "function.h"
 
 //#define _SS_MAX_RX_BUFF 128                             // adjust the RX buffer size SoftwareSerial
                         
@@ -15,30 +17,7 @@
 #define KEYBOARD_PIN 18   // input keyboard 
 #define VOLT_PIN 17       // input electrical network
 #define BUZZER_PIN 6      // on the board
-#define BUTTON_PIN 16     // on the board
-                                       
-class Sensor {                          // declaring a class Sensor
-  public:
-  byte adress_;
-  byte pin_;                            // Input pin number
-  byte pin_alarm_1_ = 0;                // Alarm output pin number 1
-  byte pin_alarm_2_ = 0;                // Alarm output pin number 2
-  bool status_ = false;                 // Input status (active - inactive)
-  bool alarm_ = false;                  // Alarm (on - off)
-  bool send_alarm_ = false;             // Notification (sent - not sent)
-  char message_alarm_[20];              // Message about sensor activation
-  
-  bool ReadPin()
-  {
-    if(digitalRead(pin_) == LOW && status_ && !alarm_) // If the pin is triggered, the input is active and there is no alarm
-    {
-      alarm_ = true;                             // Activate the alarm
-      return true; 
-    }
-    else
-      return false;
-  } 
- };   
+#define BUTTON_PIN 16     // on the board                                    
                    
 SoftwareSerial SIM800(14, 15);                                  // RX, TX (pins for connecting the SIM module) 
 
@@ -83,31 +62,6 @@ byte triggered[6] = {9,9,9,9,9,9};                              // Array of addr
 byte counter_triggered = 0;                                     // Counter of sensor workings
 byte counter_admins = 5;                                        // Number of administrators
 Sensor zone[6];                                                 // Array of objects Sensor
-
-/////////////////////////////// Function prototypes ////////////////////////////////////////
-
-void Call(String & num);
-String SendATCommand(String cmd, bool waiting);
-String WaitResponse();
-void GetSensors();
-void AlarmMessages();
-void ParseSMS(String & msg);
-void SetLedState(String & result, String & msgphone);
-void SendSMS(String message);
-float GetBalans(String & code);
-float GetFloatFromString(String & str);
-void GetBalanceSim();
-void InitialZones();
-void InitialMacros();
-void GetVoltage();
-void TestModem();
-void InitialModem();
-void GetNewSMS();
-void GetKeyboard();
-void ActivateRelay(byte Alarm1, byte Alarm2);
-void InitialEeprom();
-void SetDingDong();
-void GetIncomingCall();
 
 ///////////////////////////////////////// Primary controller settings function /////////////////////////////////////////
 
