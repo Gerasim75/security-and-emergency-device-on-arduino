@@ -3,6 +3,8 @@
 #include  <SoftwareSerial.h>                                
 #include  <EEPROM.h> 
 #include  <CyberLib.h> 
+#include  "sensor.h"
+#include  "function.h"
 
 //#define _SS_MAX_RX_BUFF 128                             // регулируем размер RX буфера SoftwareSerial
                         
@@ -15,30 +17,7 @@
 #define KEYBOARD_PIN 18   // Вход клавиатура 
 #define VOLT_PIN 17       // Вход сеть
 #define BUZZER_PIN 6      // На плате
-#define BUTTON_PIN 16     // На плате
-                                       
-class Sensor {                          // Объявляем класс Sensor
-  public:
-  byte adress_;
-  byte pin_;                            // Номер пина ввода
-  byte pin_alarm_1_ = 0;                // Номер пина вывода тревоги 1
-  byte pin_alarm_2_ = 0;                // Номер пина вывода тревоги 2
-  bool status_ = false;                 // Статус ввода (активен - не активен)
-  bool alarm_ = false;                  // Тревога (вкл - выкл)
-  bool send_alarm_ = false;             // Уведомление отправлено - не отправлено
-  char message_alarm_[20];              // Сообщение о сработке датчика
-  
-  bool ReadPin()
-  {
-    if(digitalRead(pin_) == LOW && status_ && !alarm_) // Если сработал пин, ввод активен и нет тревоги
-    {
-      alarm_ = true;                             // Активировать тревогу
-      return true; 
-    }
-    else
-      return false;
-  } 
- };   
+#define BUTTON_PIN 16     // На плате                                    
                    
 SoftwareSerial SIM800(14, 15);                                  // RX, TX (пины подключения сим-модуля) 
 
@@ -83,31 +62,6 @@ byte triggered[6] = {9,9,9,9,9,9};                              // Массив 
 byte counter_triggered = 0;                                     // Счетчик сработок датчиков
 byte counter_admins = 5;                                        // Количество администраторов
 Sensor zone[6];                                                 // Массив объектов Sensor
-
-/////////////////////////////// Прототипы функций ////////////////////////////////////////
-
-void Call(String & num);
-String SendATCommand(String cmd, bool waiting);
-String WaitResponse();
-void GetSensors();
-void AlarmMessages();
-void ParseSMS(String & msg);
-void SetLedState(String & result, String & msgphone);
-void SendSMS(String message);
-float GetBalans(String & code);
-float GetFloatFromString(String & str);
-void GetBalanceSim();
-void InitialZones();
-void InitialMacros();
-void GetVoltage();
-void TestModem();
-void InitialModem();
-void GetNewSMS();
-void GetKeyboard();
-void ActivateRelay(byte Alarm1, byte Alarm2);
-void InitialEeprom();
-void SetDingDong();
-void GetIncomingCall();
 
 ///////////////////////////////////////// Функция настроек контроллера /////////////////////////////////////////
 
