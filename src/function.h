@@ -26,5 +26,14 @@ void ActivateRelay(byte Alarm1, byte Alarm2);
 void InitialEeprom();
 void SetDingDong();
 void GetIncomingCall();
+void sendSMSinPDU(String message);
+void getPDUPack(String *phone, String *message, String *result, int *PDUlen);
+String getDAfield(String *phone, bool fullnum);
+String UCS2ToString(String s);
+unsigned char HexSymbolToChar(char c);
+String StringToUCS2(String s);
+unsigned int getCharSize(unsigned char b);
+unsigned int symbolToUInt(const String& bytes);
+String byteToHexString(byte i);
  
 #endif
