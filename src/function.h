@@ -10,6 +10,7 @@ void GetSensors();
 void AlarmMessages();
 void ParseSMS(String & msg);
 void SetLedState(String & result, String & msgphone);
+void SetControlledRelay(String & result);
 void SendSMS(String message);
 float GetBalans(String & code);
 float GetFloatFromString(String & str);
