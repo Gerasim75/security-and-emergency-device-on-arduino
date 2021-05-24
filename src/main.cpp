@@ -1,6 +1,6 @@
 /// My_feacture
 
-//// Голосовые уведомления звонком
+//// Голосовые уведомления звонком, киррилические смс, 16 выходов реле.
 
 /////////////////////////// Охранно-аварийная gsm-сигнализация с sms-управляемыми реле ////////////////////////////////
 
@@ -325,19 +325,19 @@ void AlarmMessages()
     {
       if(zone[triggered[i]].alarm_ == true && zone[triggered[i]].send_alarm_ == false) // Если поднят флаг сработки датчика и уведомление не отправлялось
       {
-        if(i == 0 && triggered[i] == 0)                                          // Если сработка в зоне 1
+        if(i == 0 && triggered[i] == 0)                                                // Если сработка в зоне 1
         {
-          if(millis() - timer_delay > timer_delay_off)                           // Если сработал таймер
+          if(millis() - timer_delay > timer_delay_off)                                 // Если сработал таймер
           {     
             ActivateRelay(zone[triggered[i]].pin_alarm_1_, zone[triggered[i]].pin_alarm_2_); // Активируем реле тревоги
-            sendSMSinPDU(zone[triggered[i]].message_alarm_);                     // Отправляем смс уведомление
-            if(!flag_tel)                                                        // Если еще не было звонка администратору
+            sendSMSinPDU(zone[triggered[i]].message_alarm_);                           // Отправляем смс уведомление
+            if(!flag_tel)                                                              // Если еще не было звонка администратору
             {
-              flag_tel = true;                                                   // Поднимаем флаг звонка  
-              Call(phones[0], zone[i].adress_);                                  // Звоним администратору
+              flag_tel = true;                                                         // Поднимаем флаг звонка  
+              Call(phones[0], zone[i].adress_);                                        // Звоним администратору
             }
-            zone[triggered[i]].send_alarm_ = true;                               // Поднимаем флаг отправленного уведомления
-            flag_delay_zone1 = true;                                             // Поднимаем флаг задержки сработки
+            zone[triggered[i]].send_alarm_ = true;                                     // Поднимаем флаг отправленного уведомления
+            flag_delay_zone1 = true;                                                   // Поднимаем флаг задержки сработки
             break;                 
           }
         }
@@ -345,14 +345,14 @@ void AlarmMessages()
         {
           if(triggered[i] == 1 && flag_zone1 && !flag_delay_zone1) break;
           ActivateRelay(zone[triggered[i]].pin_alarm_1_, zone[triggered[i]].pin_alarm_2_);   // Активируем реле тревоги
-          sendSMSinPDU(zone[triggered[i]].message_alarm_);                            // Отправляем смс уведомление
-          if(!flag_tel)                                                               // Если еще не было звонка администратору
+          sendSMSinPDU(zone[triggered[i]].message_alarm_);                             // Отправляем смс уведомление
+          if(!flag_tel)                                                                // Если еще не было звонка администратору
           {
-            flag_tel = true;                                                          // Поднимаем флаг звонка  
-            Call(phones[0], zone[i].adress_);                                         // Звоним администратору
+            flag_tel = true;                                                           // Поднимаем флаг звонка  
+            Call(phones[0], zone[i].adress_);                                          // Звоним администратору
           }
-          zone[triggered[i]].send_alarm_ = true;                                      // Поднимаем флаг отправленного уведомления
-          break;                                                                      // Выходим из цикла
+          zone[triggered[i]].send_alarm_ = true;                                       // Поднимаем флаг отправленного уведомления
+          break;                                                                       // Выходим из цикла
         }
       }
     }
@@ -399,75 +399,75 @@ void SetLedState(String & result, String & msgphone)
         EEPROM.write(106, 0);                      // Записываем его в память  
         macros_id = 0;
         InitialMacros();                           // Инициализируем макрос
-        sendSMSinPDU(F("Режим 1 Вкл"));                   // Отправляем смс с результатом администратору 
+        sendSMSinPDU(F("Режим 1 Вкл"));            // Отправляем смс с результатом администратору 
         mode = true;       
       }
       if(ledState == 2) 
       {
-        EEPROM.write(106, 1);                    // Записываем его в память
+        EEPROM.write(106, 1);                      // Записываем его в память
         macros_id = 1;
-        InitialMacros();                         // Инициализируем макрос 
-        sendSMSinPDU(F("Режим 2 Вкл"));                 // Отправляем смс с результатом администратору 
+        InitialMacros();                           // Инициализируем макрос 
+        sendSMSinPDU(F("Режим 2 Вкл"));            // Отправляем смс с результатом администратору 
         mode = true;              
       }
       if(ledState == 3)
       {
-        EEPROM.write(106, 2);                    // Записываем его в память
+        EEPROM.write(106, 2);                      // Записываем его в память
         macros_id = 2;
-        InitialMacros();                         // Инициализируем макрос   
-        sendSMSinPDU(F("Режим 3 Вкл"));                 // Отправляем смс с результатом администратору 
+        InitialMacros();                           // Инициализируем макрос   
+        sendSMSinPDU(F("Режим 3 Вкл"));            // Отправляем смс с результатом администратору 
         mode = true;            
       }
       if(ledState == 4)
       { 
-        EEPROM.write(106, 3);                    // Записываем его в память
+        EEPROM.write(106, 3);                      // Записываем его в память
         macros_id = 3;
-        InitialMacros();                         // Инициализируем макрос
-        sendSMSinPDU(F("Режим 4 Вкл"));                 // Отправляем смс с результатом администратору    
+        InitialMacros();                           // Инициализируем макрос
+        sendSMSinPDU(F("Режим 4 Вкл"));            // Отправляем смс с результатом администратору    
         mode = true;               
       }
       if(ledState == 5) 
       {
-        EEPROM.write(106, 4);                    // Записываем его в память
+        EEPROM.write(106, 4);                      // Записываем его в память
         macros_id = 4;
-        InitialMacros();                         // Инициализируем макрос  
-        sendSMSinPDU(F("Режим 5 Вкл"));                 // Отправляем смс с результатом администратору
+        InitialMacros();                           // Инициализируем макрос  
+        sendSMSinPDU(F("Режим 5 Вкл"));            // Отправляем смс с результатом администратору
         mode = true;
       }
       if(ledState == 0) 
       {
-        mode = false;                            // Снимаем с охраны
-        sendSMSinPDU(F("Режим Выкл"));                  // Отправляем смс с результатом администратору
+        mode = false;                              // Снимаем с охраны
+        sendSMSinPDU(F("Режим Выкл"));             // Отправляем смс с результатом администратору
       }     
-      tone(BUZZER_PIN, 1915);                    // Сигнализируем динамиком о смене режима охраны
+      tone(BUZZER_PIN, 1915);                      // Сигнализируем динамиком о смене режима охраны
       delay(1000);
       noTone(6); 
-      correct  =  true;                          // Флаг корректности команды
+      correct  =  true;                            // Флаг корректности команды
     }
     if (!correct) 
     {
-      sendSMSinPDU(F("Некорректная команда!"));          // Отправляем смс с результатом администратору
+      sendSMSinPDU(F("Некорректная команда!"));    // Отправляем смс с результатом администратору
     }
   }
   else
   {
-    if(result.length()  ==  13 && msgphone == phones[0])  // Если в сообщении номер телефона и отправитель админ 1
+    if(result.length()  ==  13 && msgphone == phones[0])    // Если в сообщении номер телефона и отправитель админ 1
     {
       bool flag_number = false;
-      for(int k = 1; k < counter_admins; k ++ )       // Проходим по списку номеров
+      for(int k = 1; k < counter_admins; k ++ )             // Проходим по списку номеров
       {
-        if(phones[k] == result)                       // Если номер есть в позиции k
+        if(phones[k] == result)                             // Если номер есть в позиции k
          {
-          flag_number = true;                         // Поднимаем флаг наличия номера
-          switch(k)                                   // Ищем его в памяти EEPROM и удаляем
+          flag_number = true;                               // Поднимаем флаг наличия номера
+          switch(k)                                         // Ищем его в памяти EEPROM и удаляем
           {
             case 1:
                   for(int i = 20; i < 33; i ++ )
                     {
-                      EEPROM.write(i, (byte)' ');     // Перезаписываем номер админа 2 пробелами                       
+                      EEPROM.write(i, (byte)' ');           // Перезаписываем номер админа 2 пробелами                       
                     }
-                    phones[k] = " ";                  // Очищаем переменную
-                    tone(BUZZER_PIN, 1915);           // Сигнализируем динамиком о удалении номера дублера
+                    phones[k] = " ";                        // Очищаем переменную
+                    tone(BUZZER_PIN, 1915);                 // Сигнализируем динамиком о удалении номера дублера
                     delay(1000);
                     noTone(6);
                     sendSMSinPDU(F("Номер 2 удален!"));
@@ -517,7 +517,7 @@ void SetLedState(String & result, String & msgphone)
       }
       for(int k = 1; k < counter_admins;k ++ )              // Проходим по списку номеров
       {
-        if (phones[k][0] != '+' && result[0] == '+' && !flag_number)// Если есть место в позиции k, номер валидный и еще не записан
+        if (phones[k][0] != '+' && result[0] == '+' && !flag_number) // Если есть место в позиции k, номер валидный и еще не записан
         {
           switch(k)
           {
@@ -585,46 +585,46 @@ void SetLedState(String & result, String & msgphone)
         command += result[1];              
         item += result[3];                       // Получаем значение
         item += result[4]; 
-        if(command == "Вкл")                      // Если команда "задержка включения"
+        if(command == "On")                      // Если команда "задержка включения режима охраны"
         {
           for(int i = 100, j = 0; i < 102; i ++ , j ++ )
           {
-            EEPROM.write(i, (byte)item[j]);      // Записываем время задержки в память EEPROM           
+            EEPROM.write(i, (byte)item[j]);            // Записываем время задержки в память EEPROM           
           }
-          timer_delay_on = item.toInt() * 1000;  // Записываем время задержки в переменную
-          item += F(" seс Вкл");                  // Формируем уведомление
-          sendSMSinPDU(item);                         // Отправляем уведомление 
+          timer_delay_on = item.toInt() * 1000;        // Записываем время задержки в переменную
+          item += F(" секунд до Вкл");                 // Формируем уведомление
+          sendSMSinPDU(item);                          // Отправляем уведомление 
         }
-        if(command == "Of")                      // Если команда "задержка выключения"
+        if(command == "Of")                            // Если команда "задержка выключения режима охраны"
         {
           for(int i = 102, j = 0; i < 104; i ++ , j ++ )
           {
-            EEPROM.write(i, (byte)item[j]);      // Записываем время задержки в память EEPROM            
+            EEPROM.write(i, (byte)item[j]);            // Записываем время задержки в память EEPROM            
           }
-          timer_delay_off = item.toInt() * 1000; // Записываем время задержки в переменную
-          item += F(" seс of");                  // Формируем уведомление
-          sendSMSinPDU(item);                         // Отправляем уведомление
+          timer_delay_off = item.toInt() * 1000;       // Записываем время задержки в переменную
+          item += F(" секунд до Выкл");                // Формируем уведомление
+          sendSMSinPDU(item);                          // Отправляем уведомление
         } 
             
-        if(command == "Bl")                        // Если команда "минимальный баланс для уведомления"
+        if(command == "Bl")                            // Если команда "минимальный баланс для уведомления"
         {
           for(int i = 104, j = 0; i < 106; i ++ , j ++ )
           {
-            EEPROM.write(i, (byte)item[j]);      // Записываем минимальный баланс для уведомления в память EEPROM            
+            EEPROM.write(i, (byte)item[j]);            // Записываем минимальный баланс для уведомления в память EEPROM            
           }
-          balance_send = item.toInt();           // Записываем минимальный баланс для уведомления в переменную
-          item += F(" grn bl");                  // Формируем уведомление
-          sendSMSinPDU(item);                         // Отправляем уведомление
+          balance_send = item.toInt();                 // Записываем минимальный баланс для уведомления в переменную
+          item += F(" грн. на счете");                 // Формируем уведомление
+          sendSMSinPDU(item);                          // Отправляем уведомление
         }
-        if(result[0] == '*' && result[4] == '#')         // Если команда "код проверки баланса" 
+        if(result[0] == '*' && result[4] == '#')       // Если команда "код проверки баланса" 
         {
-          operator_code = "";                             // Очищаем переменную хранения кода проверки баланса
+          operator_code = "";                          // Очищаем переменную хранения кода проверки баланса
           for(int i = 107, j = 0; i < 112; i ++ , j ++ )
           {
-            EEPROM.write(i, (byte)result[j]);         // Записываем код проверки баланса в память EEPROM
-            operator_code += result[j];               // Записываем код проверки баланса в переменную           
+            EEPROM.write(i, (byte)result[j]);          // Записываем код проверки баланса в память EEPROM
+            operator_code += result[j];                // Записываем код проверки баланса в переменную           
           }  
-          sendSMSinPDU(operator_code);                     // Отправляем уведомление      
+          sendSMSinPDU(operator_code);                 // Отправляем уведомление      
         }
       }
       else
@@ -642,266 +642,266 @@ void SetLedState(String & result, String & msgphone)
 
 void SetControlledRelay(String & result)
 {
-  int command;                                  // Объявляем переменную для записи команд
-  command = atoi(result.c_str());               // Получаем значение в переменную и конвертируем в число
+  int command;                                          // Объявляем переменную для записи команд
+  command = atoi(result.c_str());                       // Получаем значение в переменную и конвертируем в число
   switch (command)
   {
   case 10:
-    bitWrite(byteToSend1, 0, 0);                // Устанавливаем значение байта B*******0 (выключаем реле 1)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 0, 0);                        // Устанавливаем значение байта B*******0 (выключаем реле 1)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 1 Выкл"));                  // Отправляем уведомление о выключении реле 1
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 1 Выкл"));                     // Отправляем уведомление о выключении реле 1
     break;
   case 11:
-    bitWrite(byteToSend1, 0, 1);                // Устанавливаем значение байта B*******1 (включаем реле 1)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 0, 1);                        // Устанавливаем значение байта B*******1 (включаем реле 1)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 1 Вкл"));                   // Отправляем уведомление о включении реле 1
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 1 Вкл"));                      // Отправляем уведомление о включении реле 1
     break;
   case 20:
-    bitWrite(byteToSend1, 1, 0);                // Устанавливаем значение байта B******0* (выключаем реле 2)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 1, 0);                        // Устанавливаем значение байта B******0* (выключаем реле 2)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 2 Выкл"));                  // Отправляем уведомление о выключении реле 2
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 2 Выкл"));                     // Отправляем уведомление о выключении реле 2
     break;
   case 21:
-    bitWrite(byteToSend1, 1, 1);                // Устанавливаем значение байта B******1* (включаем реле 2)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 1, 1);                        // Устанавливаем значение байта B******1* (включаем реле 2)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 2 Вкл"));                   // Отправляем уведомление о включении реле 2
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 2 Вкл"));                      // Отправляем уведомление о включении реле 2
     break;
   case 30:
-    bitWrite(byteToSend1, 2, 0);                // Устанавливаем значение байта B*****0** (выключаем реле 3)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 2, 0);                        // Устанавливаем значение байта B*****0** (выключаем реле 3)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 3 Выкл"));                  // Отправляем уведомление о выключении реле 3
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 3 Выкл"));                     // Отправляем уведомление о выключении реле 3
     break;
   case 31:
-    bitWrite(byteToSend1, 2, 1);                // Устанавливаем значение байта B*****1** (включаем реле 3)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 2, 1);                        // Устанавливаем значение байта B*****1** (включаем реле 3)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 3 Вкл"));                   // Отправляем уведомление о включении реле 3
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 3 Вкл"));                      // Отправляем уведомление о включении реле 3
     break;
   case 40:
-    bitWrite(byteToSend1, 3, 0);                // Устанавливаем значение байта B****0*** (выключаем реле 4)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
-   shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
+    bitWrite(byteToSend1, 3, 0);                        // Устанавливаем значение байта B****0*** (выключаем реле 4)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
+   shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1);  // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 4 Выкл"));                  // Отправляем уведомление о выключении реле 4
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 4 Выкл"));                     // Отправляем уведомление о выключении реле 4
     break;
   case 41:
-    bitWrite(byteToSend1, 3, 1);                // Устанавливаем значение байта B****1*** (включаем реле 4)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 3, 1);                        // Устанавливаем значение байта B****1*** (включаем реле 4)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 4 Вкл"));                   // Отправляем уведомление о включении реле 4
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 4 Вкл"));                      // Отправляем уведомление о включении реле 4
     break;
   case 50:
-    bitWrite(byteToSend1, 4, 0);                // Устанавливаем значение байта B***0**** (выключаем реле 5)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 4, 0);                        // Устанавливаем значение байта B***0**** (выключаем реле 5)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 5 Выкл"));                  // Отправляем уведомление о выключении реле 5
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 5 Выкл"));                     // Отправляем уведомление о выключении реле 5
     break;
   case 51:
-    bitWrite(byteToSend1, 4, 1);                // Устанавливаем значение байта B***1**** (включаем реле 5)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 4, 1);                        // Устанавливаем значение байта B***1**** (включаем реле 5)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 5 Вкл"));                   // Отправляем уведомление о включении реле 5
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 5 Вкл"));                      // Отправляем уведомление о включении реле 5
     break;
   case 60:
-    bitWrite(byteToSend1, 5, 0);                // Устанавливаем значение байта B**0***** (выключаем реле 6)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 5, 0);                        // Устанавливаем значение байта B**0***** (выключаем реле 6)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 6 Выкл"));                  // Отправляем уведомление о выключении реле 6
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 6 Выкл"));                     // Отправляем уведомление о выключении реле 6
     break;
   case 61:
-    bitWrite(byteToSend1, 5, 1);                // Устанавливаем значение байта B**1***** (включаем реле 6)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 5, 1);                        // Устанавливаем значение байта B**1***** (включаем реле 6)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 6 Вкл"));                   // Отправляем уведомление о включении реле 6
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 6 Вкл"));                      // Отправляем уведомление о включении реле 6
     break;
   case 70:
-    bitWrite(byteToSend1, 6, 0);                // Устанавливаем значение байта B*0****** (выключаем реле 7)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 6, 0);                        // Устанавливаем значение байта B*0****** (выключаем реле 7)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 7 Выкл"));                  // Отправляем уведомление о выключении реле 7
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 7 Выкл"));                     // Отправляем уведомление о выключении реле 7
     break;
   case 71:
-    bitWrite(byteToSend1, 6, 1);                // Устанавливаем значение байта B*1****** (включаем реле 7)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 6, 1);                        // Устанавливаем значение байта B*1****** (включаем реле 7)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 7 Вкл"));                   // Отправляем уведомление о включении реле 7
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 7 Вкл"));                      // Отправляем уведомление о включении реле 7
     break;
   case 80:
-    bitWrite(byteToSend1, 7, 0);                // Устанавливаем значение байта B0******* (выключаем реле 8)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 7, 0);                        // Устанавливаем значение байта B0******* (выключаем реле 8)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 8 Выкл"));                  // Отправляем уведомление о выключении реле 8
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 8 Выкл"));                     // Отправляем уведомление о выключении реле 8
     break;
   case 81:
-    bitWrite(byteToSend1, 7, 1);                // Устанавливаем значение байта B1******* (включаем реле 8)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend1, 7, 1);                        // Устанавливаем значение байта B1******* (включаем реле 8)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 8 Вкл"));                   // Отправляем уведомление о включении реле 8
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 8 Вкл"));                      // Отправляем уведомление о включении реле 8
     break;
   case 90:
-    bitWrite(byteToSend2, 0, 0);                // Устанавливаем значение байта B*******0 (выключаем реле 9)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 0, 0);                        // Устанавливаем значение байта B*******0 (выключаем реле 9)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 9 Выкл"));                  // Отправляем уведомление о выключении реле 9
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 9 Выкл"));                     // Отправляем уведомление о выключении реле 9
     break;
   case 91:
-    bitWrite(byteToSend2, 0, 1);                // Устанавливаем значение байта B*******1 (включаем реле 9)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 0, 1);                        // Устанавливаем значение байта B*******1 (включаем реле 9)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 9 Вкл"));                   // Отправляем уведомление о включении реле 9
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 9 Вкл"));                      // Отправляем уведомление о включении реле 9
     break;
     ////////////////////////////////////////////////
   case 100:
-    bitWrite(byteToSend2, 1, 0);                // Устанавливаем значение байта B******0* (выключаем реле 10)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 1, 0);                        // Устанавливаем значение байта B******0* (выключаем реле 10)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 10 Выкл"));                 // Отправляем уведомление о выключении реле 10
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 10 Выкл"));                    // Отправляем уведомление о выключении реле 10
     break;
   case 101:
-    bitWrite(byteToSend2, 1, 1);                // Устанавливаем значение байта B******1* (включаем реле 10)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 1, 1);                        // Устанавливаем значение байта B******1* (включаем реле 10)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 10 Вкл"));                  // Отправляем уведомление о включении реле 10
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 10 Вкл"));                     // Отправляем уведомление о включении реле 10
     break;
   case 110:
-    bitWrite(byteToSend2, 2, 0);                // Устанавливаем значение байта B*****0** (выключаем реле 11)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 2, 0);                        // Устанавливаем значение байта B*****0** (выключаем реле 11)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 11 Выкл"));                 // Отправляем уведомление о выключении реле 11
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 11 Выкл"));                    // Отправляем уведомление о выключении реле 11
     break;
   case 111:
-    bitWrite(byteToSend2, 2, 1);                // Устанавливаем значение байта B*****1** (включаем реле 11)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 2, 1);                        // Устанавливаем значение байта B*****1** (включаем реле 11)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 11 Вкл"));                  // Отправляем уведомление о включении реле 11
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 11 Вкл"));                     // Отправляем уведомление о включении реле 11
     break;
   case 120:
-    bitWrite(byteToSend2, 3, 0);                // Устанавливаем значение байта B****0*** (выключаем реле 12)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
-   shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
+    bitWrite(byteToSend2, 3, 0);                        // Устанавливаем значение байта B****0*** (выключаем реле 12)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
+   shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1);  // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 12 Выкл"));                 // Отправляем уведомление о выключении реле 12
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 12 Выкл"));                    // Отправляем уведомление о выключении реле 12
     break;
   case 121:
-    bitWrite(byteToSend2, 3, 1);                // Устанавливаем значение байта B****1*** (включаем реле 12)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 3, 1);                        // Устанавливаем значение байта B****1*** (включаем реле 12)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 12 Вкл"));                  // Отправляем уведомление о включении реле 12
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 12 Вкл"));                     // Отправляем уведомление о включении реле 12
     break;
   case 130:
-    bitWrite(byteToSend2, 4, 0);                // Устанавливаем значение байта B***0**** (выключаем реле 13)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 4, 0);                        // Устанавливаем значение байта B***0**** (выключаем реле 13)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 13 Выкл"));                 // Отправляем уведомление о выключении реле 13
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 13 Выкл"));                    // Отправляем уведомление о выключении реле 13
     break;
   case 131:
-    bitWrite(byteToSend2, 4, 1);                // Устанавливаем значение байта B***1**** (включаем реле 13)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 4, 1);                        // Устанавливаем значение байта B***1**** (включаем реле 13)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 13 Вкл"));                  // Отправляем уведомление о включении реле 13
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 13 Вкл"));                     // Отправляем уведомление о включении реле 13
     break;
   case 140:
-    bitWrite(byteToSend2, 5, 0);                // Устанавливаем значение байта B**0***** (выключаем реле 14)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 5, 0);                        // Устанавливаем значение байта B**0***** (выключаем реле 14)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 14 Выкл"));                 // Отправляем уведомление о выключении реле 14
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 14 Выкл"));                    // Отправляем уведомление о выключении реле 14
     break;
   case 141:
-    bitWrite(byteToSend2, 5, 1);                // Устанавливаем значение байта B**1***** (включаем реле 14)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 5, 1);                        // Устанавливаем значение байта B**1***** (включаем реле 14)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 14 Вкл"));                  // Отправляем уведомление о включении реле 14
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 14 Вкл"));                     // Отправляем уведомление о включении реле 14
     break;
   case 150:
-    bitWrite(byteToSend2, 6, 0);                // Устанавливаем значение байта B*0****** (выключаем реле 15)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 6, 0);                        // Устанавливаем значение байта B*0****** (выключаем реле 15)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 15 Выкл"));                 // Отправляем уведомление о выключении реле 15
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 15 Выкл"));                    // Отправляем уведомление о выключении реле 15
     break;
   case 151:
-    bitWrite(byteToSend2, 6, 1);                // Устанавливаем значение байта B*1****** (включаем реле 15)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 6, 1);                        // Устанавливаем значение байта B*1****** (включаем реле 15)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 15 Вкл"));                  // Отправляем уведомление о включении реле 15
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 15 Вкл"));                     // Отправляем уведомление о включении реле 15
     break;
   case 160:
-    bitWrite(byteToSend2, 7, 0);                // Устанавливаем значение байта B0******* (выключаем реле 16)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 7, 0);                        // Устанавливаем значение байта B0******* (выключаем реле 16)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 16 Выкл"));                 // Отправляем уведомление о выключении реле 16
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 16 Выкл"));                    // Отправляем уведомление о выключении реле 16
     break;
   case 161:
-    bitWrite(byteToSend2, 7, 1);                // Устанавливаем значение байта B1******* (включаем реле 16)
-    digitalWrite(latchPin, LOW);                // Открываем сдвиговый регистр для записи
+    bitWrite(byteToSend2, 7, 1);                        // Устанавливаем значение байта B1******* (включаем реле 16)
+    digitalWrite(latchPin, LOW);                        // Открываем сдвиговый регистр для записи
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend1); // Записываем первый байт
     shiftOut(dataPin, clockPin, LSBFIRST, byteToSend2); // Записываем второй байт
-    digitalWrite(latchPin, HIGH);               // Закрываем защелку сдвигового регистра (активируем пины)
-    sendSMSinPDU(F("Реле 16 Вкл"));                  // Отправляем уведомление о включении реле 16
+    digitalWrite(latchPin, HIGH);                       // Закрываем защелку сдвигового регистра (активируем пины)
+    sendSMSinPDU(F("Реле 16 Вкл"));                     // Отправляем уведомление о включении реле 16
     break;
   default:
     break;
@@ -981,7 +981,7 @@ if((millis() - timer_balance) > time_balance)
     if(balance <= balance_send)                            // Порог баланса для оповещения
     {
       message += (String)balance;                          // Добавляем баланс в сообщение
-      sendSMSinPDU(message);                                    // Отправляем уведомление о балансе администратору
+      sendSMSinPDU(message);                               // Отправляем уведомление о балансе администратору
     }
     timer_balance = millis();                              // Сбрасываем счетчик
     flag_balance = true;                                   // Поднимаем флаг проведенной проверки баланса
@@ -1395,12 +1395,12 @@ void GetIncomingCall()
 
       for(int i = 0; i < 13; i ++ )
       {
-        EEPROM.write(i, (byte)phones[0][i]);     // Записываем номер в память EEPROM
+        EEPROM.write(i, (byte)phones[0][i]);       // Записываем номер в память EEPROM
       }  
       SIM800.print(F("AT+CREC=4,\"C:\\User\\admin.amr\",0,80"));   // Проигрываем звуковой файл
-      delay(DELAY_PLAY_TRACK);                   // Делаем паузу для воспроизведения трека  
-      SendATCommand("ATH", true);                // Сбрасываем звонок         
-      tone(BUZZER_PIN, 1915);                    // Сигнализируем динамиком о принятии номера администратора
+      delay(DELAY_PLAY_TRACK);                     // Делаем паузу для воспроизведения трека  
+      SendATCommand("ATH", true);                  // Сбрасываем звонок         
+      tone(BUZZER_PIN, 1915);                      // Сигнализируем динамиком о принятии номера администратора
       delay(1000);
       noTone(6); 
       sendSMSinPDU(F("Номер администратора принят!"));  
